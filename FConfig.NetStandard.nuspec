@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/armalagit/FConfig.NetStandard</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright © armalagit</copyright>
+    <tags>cfg config configuration setting settings appsettings options opt</tags>
+  </metadata>
+  <files>
+    <file src="FConfig.cs" target="FConfig\" />
+    <file src="Events.cs" target="FConfig\" />
+    <file src="StringEncryption.cs" target="FConfig\" />
+  </files>
+</package>
