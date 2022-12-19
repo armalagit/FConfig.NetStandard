@@ -1,3 +1,5 @@
+https://github.com/armalagit/FConfig.NetStandard
+
 # FConfig
 ## What is FConfig?
 FConfig is a simple method to handle application configuration. Supports encryption.
