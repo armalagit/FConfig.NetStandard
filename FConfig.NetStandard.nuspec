@@ -7,7 +7,7 @@
     <authors>$author$</authors>
     <owners>$author$</owners>
     <license type="expression">MIT</license>
-    <projectUrl>https://github.com/armalagit/FConfig.NetStandard</projectUrl>
+    <projectUrl>https://github.com/armalagit/FConfig.NetStandard/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>Copyright © armalagit</copyright>
