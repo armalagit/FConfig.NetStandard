@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Armala.FConfig</AssemblyName>
+    <RootNamespace>Armala.FConfig</RootNamespace>
+    <ApplicationIcon>letter-f.ico</ApplicationIcon>
+    <Version>22.12.19.719</Version>
+    <Authors>Armala#1337</Authors>
+    <Company>armalagit</Company>
+    <Product>FConfig</Product>
+    <Description>FConfig is a simple method to handle application configuration. Supports encryption.</Description>
+    <Copyright>Copyright © armalagit</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/armalagit/FConfig</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/armalagit/FConfig</RepositoryUrl>
+    <PackageTags>cfg config configuration settings setting appsettings</PackageTags>
+    <NeutralLanguage>English</NeutralLanguage>
+    <SignAssembly>false</SignAssembly>
+    <PackageIcon>letter-f.png</PackageIcon>
+    <PackageIconUrl />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="D:\Downloads\letter-f.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
