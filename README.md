@@ -1,4 +1,4 @@
-The project is maintained in GitHub: https://github.com/armalagit/FConfig.NetStandard
+The project is maintained at GitHub: https://github.com/armalagit/FConfig.NetStandard
 
 # FConfig
 ## What is FConfig?
