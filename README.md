@@ -1,11 +1,11 @@
-https://github.com/armalagit/FConfig.NetStandard
+The project is maintained in GitHub: https://github.com/armalagit/FConfig.NetStandard
 
 # FConfig
 ## What is FConfig?
-FConfig is a simple method to handle application configuration. Supports encryption.
+FConfig is a simple method to handle application configuration. Supports encryption. It is very easy to use and has no dependencies. Thanks to the framework it uses I don't think there should be any noticable compatibility issues.
 
 ## Pre-requisites
-This little piece of fine code runs on NetStandard 2.0.
+This little piece of fine code runs on **NetStandard 2.0**.
 
 ## How to use
 ### **Construct**
