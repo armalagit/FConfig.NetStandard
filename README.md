@@ -29,7 +29,8 @@ Optionally you can supply the method with a fallback object. This fallback objec
 | FConfig.Get<string>("key", "fallback") | Get | object | string | object |
 
 ### **Set**
-``FConfig.Set<T>(<identifier>, <value>)``
+Overwrite new value: ``FConfig.Set<T>(<identifier>, <value>)``
+Remvoe value from collection: ``FConfig.Set<T>(<identifier>)``
 #### Method
 After each ``Set<T>`` the file is written to the disk.
 
