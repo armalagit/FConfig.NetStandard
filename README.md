@@ -20,7 +20,7 @@ To construct the initial method call ``FConfig.Construct(<file path>, <secret ke
 Using encryption requires the ``secret key`` to be supplied. The secret key must be a **32 character** string.
 
 ### **Get**
-``FConfig.Get<T>(identifier)``
+* Read value from collection: ``FConfig.Get<T>(identifier)``
 #### Method
 Optionally you can supply the method with a fallback object. This fallback object is also written to the configuration file.
 
@@ -29,8 +29,8 @@ Optionally you can supply the method with a fallback object. This fallback objec
 | FConfig.Get<string>("key", "fallback") | Get | object | string | object |
 
 ### **Set**
-Overwrite new value: ``FConfig.Set<T>(<identifier>, <value>)``
-  Remove value from collection: ``FConfig.Set<T>(<identifier>)``
+* Overwrite new value: ``FConfig.Set<T>(<identifier>, <value>)``
+* Remove value from collection: ``FConfig.Set<T>(<identifier>)``
 #### Method
 After each ``Set<T>`` the file is written to the disk.
 
