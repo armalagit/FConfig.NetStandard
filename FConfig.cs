@@ -118,7 +118,6 @@ public class FConfig
 
     }
 
-
     // Initialize a new configuration object
     /// <summary>
     /// Reads the specified configuration value from the configuration object read from the file into process memory.
@@ -173,12 +172,15 @@ public class FConfig
     /// </summary>
     /// <param name="identifier">Configuration identifier value.</param>
     /// <param name="newValue">New value object.</param>
-    public static void Set<T>(string identifier, T newValue)
+    public static void Set<T>(string identifier, T newValue = null)
     {
 
         Dictionary<string, object> configObj = Configuration;
 
         configObj[identifier] = newValue;
+
+        // Remove the value instead?
+        if (newValue == null) { configObj.Remove(identifier); };
 
         // Create a BinaryFormatter to serialize the dictionary
         BinaryFormatter formatter = new BinaryFormatter();
