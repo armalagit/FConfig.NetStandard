@@ -31,7 +31,7 @@ Reads the specified configuration item from the collection.
 Sets the specified value in the configuration collection.
 #### FConfig.Set
 After each ``Set<T>`` the configuration bytes are flushed to the disk.
-| Parameter| Object type | Default value | Optional | Description |
+| Parameter | Object type | Default value | Optional | Description |
 |---|---|---|---|---|
 | identifier | string | string.Empty | false | Configuration collection item identifier. |
 | newValue | object | defaukt | false | New value. |
@@ -40,6 +40,6 @@ After each ``Set<T>`` the configuration bytes are flushed to the disk.
 Removes the specified configuration item from the collection.
 #### FConfig.Del
 After each ``Del<T>`` the configuration bytes are flushed to the disk.
-| Parameter| Object type | Default value | Optional | Description |
+| Parameter | Object type | Default value | Optional | Description |
 |---|---|---|---|---|
 | identifier | string | string.Empty | false | Configuration collection item identifier. |
