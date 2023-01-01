@@ -39,7 +39,7 @@ After each ``Set<T>`` the configuration bytes are flushed to the disk.
 ### **Del**
 Removes the specified configuration item from the collection.
 #### FConfig.Del
-After each ``Del<T>`` the configuration bytes are flushed to the disk.
+After each ``Del`` the configuration bytes are flushed to the disk.
 | Parameter | Object type | Default value | Optional | Description |
 |---|---|---|---|---|
 | identifier | string | string.Empty | false | Configuration collection item identifier. |
