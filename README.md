@@ -1,45 +1,106 @@
-The project is maintained at GitHub: https://github.com/armalagit/FConfig.NetStandard
+# FConfig 
 
-# FConfig
-## What is FConfig?
-FConfig is a simple method to handle application configuration. In an essence this is just a fancy ``Dictionary<key, value>`` which saves the collection array to a disk and even encrypts it. Because this is actually a Dictionary in disguise you can save anything as the value. It is very easy to use and has no dependencies. Thanks to the framework it uses I don't think there should be any noticable compatibility issues.
+FConfig is a configuration management library for .NET applications. It provides an easy way to store and retrieve configuration values in a file, with the option to use AES encryption for added security.
+## Installation
 
-## Pre-requisites
-This little piece of fine code runs on **NetStandard 2.0**.
+### PackageManager
+```
+NuGet\Install-Package Armala.FConfig
+```
 
-## How to use
-### **Construct**
-To construct the initial method call this method once per project initialization. Calling this method again in the same instance reloads the configuration from the file.
-#### FConfig.Construct
-| Parameter| Object type | Default value | Optional | Description |
-|---|---|---|---|---|
-| configurationPath | string | string.Empty | false | Directory path to where the configuration will be or is saved at. |
-| secretKey | string | string.Empty | true | A 32 character secret key to use for encryption. |
-| useEncryption | boolean | true | true | Encrypt configuration before flushing the bytes to disk. |
-##### Encrypt
-Using encryption requires the ``secret key`` to be supplied. The secret key must be a **32 character** string.
+### .NET CLI
+```
+dotnet add package Armala.FConfig
+```
+## Dependencies
+FConfig depends on the following libraries:
+- System.Security.Cryptography.Algorithms (≥ 4.3.0)
+These dependencies will be automatically installed when you install FConfig.
 
-### **Get**
-Reads the specified configuration item from the collection.
-#### FConfig.Get
-| Parameter| Object type | Default value | Optional | Description |
-|---|---|---|---|---|
-| identifier | string | string.Empty | false | Configuration collection item identifier. |
-| fallback | object | defaukt | true | Configuration fallback item to return on null result. |
+## ConfigManager
+This is a C# class for managing a configuration file using the AES algorithm for optional encryption.
 
-### **Set**
-Sets the specified value in the configuration collection.
-#### FConfig.Set
-After each ``Set<T>`` the configuration bytes are flushed to the disk.
-| Parameter | Object type | Default value | Optional | Description |
-|---|---|---|---|---|
-| identifier | string | string.Empty | false | Configuration collection item identifier. |
-| newValue | object | defaukt | false | New value. |
+### Methods
+#### `Construct(string configurationPath, string secretKey = null, bool useEncryption = true)`
+Constructs a new instance of the ConfigManager class. 
 
-### **Del**
-Removes the specified configuration item from the collection.
-#### FConfig.Del
-After each ``Del`` the configuration bytes are flushed to the disk.
-| Parameter | Object type | Default value | Optional | Description |
-|---|---|---|---|---|
-| identifier | string | string.Empty | false | Configuration collection item identifier. |
+The configuration path, secret key, and use of encryption can be specified. If the secret key is not provided or is not 32 characters in length, an ArgumentException will be thrown. 
+
+If the configuration file at the specified path does not exist, an empty file will be created. The global variables ConfigurationPath, Encrypt, and SecretKey will be set, and the Configuration dictionary will be populated with the data from the configuration file. If the file is empty, the Configuration dictionary will be initialized as an empty dictionary. If encryption is enabled, the data will be decrypted before being deserialized into the Configuration dictionary. The OnConfigurationLoaded event will be raised after the configuration has been loaded.
+
+#### `Get<T>(string identifier, T fallback = default)`
+Gets the configuration value with the specified identifier. If the value is not found or cannot be converted to the specified type, the fallback value will be returned and set as the value for the specified identifier.
+
+#### `Set<T>(string identifier, T newValue)`
+Overwrites the specified configuration value in the Configuration dictionary and flushes the configuration bytes to a file.
+
+#### `Remove(string identifier)`
+Removes the configuration value with the specified identifier from the Configuration dictionary and saves the updated configuration to the configuration file.
+
+### Properties
+#### Configuration
+A `Dictionary<string, object>` that contains the configuration data.
+
+#### ConfigurationPath
+A string containing the full path to the configuration file.
+
+#### Encrypt
+A bool indicating whether the configuration file is encrypted.
+
+#### SecretKey
+A string containing the secret key used for encryption.
+
+### Events
+#### OnConfigurationLoaded(Dictionary<string, object> configuration)
+This event is raised after the configuration has been loaded. The configuration parameter contains the Configuration dictionary.
+
+### Examples
+```c#
+FConfig.Construct("C:\\my-config-folder", "my-secret-key", true);
+
+// Get the value of the "database-password" configuration key
+string password = FConfig.Get<string>("database-password", "fallback value");
+
+// Set the value of the "api-key" configuration key
+FConfig.Set("api-key", "abc123");
+
+// Remove the "api-key" configuration element
+FConfig.Remove("api-key");
+```
+
+## ByteEncryption
+This is a C# class for encrypting and decrypting byte arrays using the AES algorithm.
+
+### Methods
+#### `Encrypt(byte[] rawBytes, string secretKey)`
+Encrypts the given raw bytes using the specified password.
+
+#### `Decrypt(byte[] secretInput, string password = null)`
+Decrypts the given encrypted bytes using the specified password.
+
+#### `Encrypt(byte[] rawBytes, byte[] salt, bool useMd5)`
+Encrypts the given raw bytes. An optional salt can be provided for encryption, and the use of MD5 can be specified.
+
+#### `Decrypt(byte[] secretInput, byte[] salt, bool useMd5)`
+Decrypts the given encrypted bytes. The salt and use of MD5 that were used for encryption must be provided.
+
+### Examples
+```c#
+byte[] rawBytes = Encoding.UTF8.GetBytes("Hello, world!");
+
+// Encrypt the raw bytes
+byte[] encryptedBytes = ByteEncryption.Encrypt(rawBytes, "my-secret-key");
+
+// Decrypt the encrypted bytes
+byte[] decryptedBytes = ByteEncryption.Decrypt(encryptedBytes, "my-secret-key");
+
+// Convert the decrypted bytes back to a string and print it
+string decryptedString = Encoding.UTF8.GetString(decryptedBytes);
+Console.WriteLine(decryptedString);  // Outputs: "Hello, world!"
+```
+
+
+## License
+
+[The Unlicense](https://unlicense.org/)
+
