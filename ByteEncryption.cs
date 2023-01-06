@@ -47,7 +47,7 @@ public static class ByteEncryption
     /// <param name="secretInput">The encrypted bytes to decrypt.</param>
     /// <param name="password">The password to use for decryption.</param>
     /// <returns>The decrypted bytes.</returns>
-    public static byte[] Decrypt(byte[] secretInput, string password) {
+    public static byte[] Decrypt(byte[] secretInput, string password = null) {
         // Initialize the return bytes as an empty array
         byte[] returnBytes = new byte[0];
 
