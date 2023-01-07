@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 
 public class FConfig {
 
@@ -100,7 +102,7 @@ public class FConfig {
         ConfigurationPath = configFilePath;
         Encrypt = useEncryption;
 
-        if (!string.IsNullOrEmpty(secretKey)) {
+        if (!string.IsNullOrWhiteSpace(secretKey)) {
             SecretKey = secretKey;
         }
 
@@ -223,6 +225,81 @@ public class FConfig {
         using (FileStream stream = new FileStream(ConfigurationPath, FileMode.Create, FileAccess.Write)) {
             stream.Write(configBytes, 0, configBytes.Length);
         }
+    }
+
+    /// <summary>
+    /// Writes the unencrypted configuration file to specified directory
+    /// </summary>
+    /// <param name="outputDirectory">The directory where the configuration file will be written</param>
+    public static void WriteToFile(string outputDirectory) {
+        // Construct the output path using the output directory and the current date and time
+        string outputPath = Path.Combine(outputDirectory, $"fconfig-{DateTime.UtcNow:s}.txt");
+
+        // Use a StringBuilder to construct the string to be written to the file
+        StringBuilder sb = new StringBuilder();
+
+        // Iterate through the key-value pairs in the Configuration dictionary
+        foreach (KeyValuePair<string, object> configItem in Configuration) {
+            // Append the key and value to the StringBuilder in the key:value format, followed by a newline
+            sb.AppendLine($"{configItem.Key}:{configItem.Value}");
+        }
+
+        // Write the contents of the StringBuilder to the file
+        File.WriteAllText(outputPath, sb.ToString());
+    }
+
+    /// <summary>
+    /// Reads the configuration values from a file and stores them in a dictionary
+    /// </summary>
+    /// <param name="inputPath">The path to the input file</param>
+    /// <param name="backup">Make a backup of current instance</param>
+    public static void ReadFromFile(string inputPath, bool backup = true) {
+        // Check if the input file exists
+        if (!File.Exists(inputPath)) {
+            throw new FileNotFoundException("The input file was not found");
+        }
+        // Read all lines from the input file
+        string[] inputFileContents = File.ReadAllLines(inputPath);
+
+        // Remove empty lines from the inputFileContents array
+        inputFileContents = inputFileContents.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+        // Create a new dictionary to store the configuration values
+        Dictionary<string, object> inputDictionary = new Dictionary<string, object> { };
+
+        // Iterate through the lines in the input file
+        foreach (string inputLine in inputFileContents) {
+            // Split the line at the colon to separate the key and value
+            (string keyName, string keyValue) = SplitKeyValue(inputLine);
+
+            // Add the key-value pair to the dictionary
+            inputDictionary.Add(keyName, keyValue);
+        }
+
+        // Check if the number of items in the dictionary matches the number of lines in the input file
+        if (inputDictionary.Count == inputFileContents.Length) {
+            // Make a backup of the file
+            if (backup) {
+                string backupPath = Path.Combine(Path.GetDirectoryName(inputPath), $"{DateTime.UtcNow:s}.fdata");
+                File.Copy(ConfigurationPath, ConfigurationPath, true);
+            }
+
+            // If the number of items in the dictionary matches the number of lines in the input file, set the Configuration dictionary to the input dictionary
+            _configuration = inputDictionary;
+        } else {
+            throw new FileLoadException("The input length does not match the constructed length");
+        }
+
+    }
+
+    private static (string, string) SplitKeyValue(string inputLine) {
+        int colonIndex = inputLine.IndexOf(':');
+        if (colonIndex == -1) {
+            throw new FileLoadException("The input file has an invalid format");
+        }
+        string keyName = inputLine.Substring(0, colonIndex).Trim();
+        string keyValue = inputLine.Substring(colonIndex + 1).Trim();
+        return (keyName, keyValue);
     }
 
 }
